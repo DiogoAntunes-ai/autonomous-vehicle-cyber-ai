@@ -11,10 +11,12 @@ def load_data():
 
 def detect_anomalies(data):
     features = [
-        "speed",
-        "battery_voltage",
-        "motor_temperature",
-        "signal_strength"
+        "speed_kmh",
+        "battery_temp_c",
+        "motor_temp_c",
+        "battery_voltage_v",
+        "signal_dbm",
+        "packet_loss_pct"
     ]
 
     model = IsolationForest(
@@ -40,8 +42,19 @@ def main():
     print(f"Anomalies detected: {len(anomalies)}")
 
     if len(anomalies) > 0:
-        print("\n⚠️ Potential cybersecurity anomalies:")
-        print(anomalies)
+        print("\nPotential cybersecurity anomalies:")
+        print(
+            anomalies[
+                [
+                    "timestamp",
+                    "speed_kmh",
+                    "battery_voltage_v",
+                    "motor_temp_c",
+                    "signal_dbm",
+                    "packet_loss_pct"
+                ]
+            ]
+        )
 
 
 if __name__ == "__main__":
